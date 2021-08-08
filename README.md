@@ -19,6 +19,5 @@ cp target/*.jar /tmp/direction.jar
 ### To run the app
 ```
 cp target/*.jar /tmp/direction.jar
-java -jar /tmp/direction.jar
 loginname=myname loginpass=mypass api_key=my_google_api_key java -jar /tmp/direction.jar
 ```
