@@ -12,7 +12,7 @@ pipeline {
 
 
         stage('Manage Master Branch') {
-            lock("unit_test_lock") {
+            lock("master_branck_lock") {
             when {
                 
                 branch "main"
@@ -21,23 +21,25 @@ pipeline {
                 sh 'ls && docker build -t direction-prod:latest .'
                 sh 'docker tag direction-prod:latest olaniyikolawole744/direction-prod:latest'
                 sh 'docker push olaniyikolawole744/direction-prod:latest'
-                sh 'docker pull olaniyikolawole744/direction-prod && docker run -d -p 9999:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
+                sh 'docker pull olaniyikolawole744/direction-prod'
+                sh 'docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
                 }
             }
         }
 
 
         stage('Manage Develop Branch') {
-            lock("unit_test_lock") {
+            lock("develop_branch_lock") {
             when {
                 
                 branch "develop"
             }
             steps {
-                sleep(time: 55, unit: "SECONDS")
-                sh 'ls && docker build -t direction-dev:latest . \
-                && docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest && docker push olaniyikolawole744/direction-dev:latest \
-                && docker pull olaniyikolawole744/direction-dev:latest && docker run -d -p 9999:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
+                sh 'ls && docker build -t direction-dev:latest .'
+                sh 'docker -t direction-dev:latest olaniyikolawole744/direction-dev:latest'
+                sh 'docker push olaniyikolawole744/direction-dev:latest'
+                sh 'docker pull olaniyikolawole744/direction-dev:latest'
+                sh 'docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
                 }
             }
         }
