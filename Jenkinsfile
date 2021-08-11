@@ -17,9 +17,10 @@ pipeline {
                 branch "main"
             }
             steps {
-                sh 'ls && docker build -t direction-prod:latest . \
-                && docker tag direction-prod:latest olaniyikolawole744/direction-prod:latest && echo "yeeeeeeexit" && docker push olaniyikolawole744/direction-prod:latest \
-                && docker pull olaniyikolawole744/direction-prod && docker run -d -p 9999:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
+                sh 'ls && docker build -t direction-prod:latest .'
+                sh 'docker tag direction-prod:latest olaniyikolawole744/direction-prod:latest'
+                sh 'docker push olaniyikolawole744/direction-prod:latest'
+                sh 'docker pull olaniyikolawole744/direction-prod && docker run -d -p 9999:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
                 }
             }
 
