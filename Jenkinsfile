@@ -3,6 +3,11 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials ('dockerhub-id')
     }
+
+    options { 
+        disableConcurrentBuilds() 
+        }
+
     stages {
         stage('Login to Dockerhub') {
             steps {
@@ -12,6 +17,7 @@ pipeline {
 
 
         stage('Manage Master Branch') {
+            lock("master_branch_lock") {
             when {
                 
                 branch "main"
@@ -23,9 +29,11 @@ pipeline {
                 sh 'docker pull olaniyikolawole744/direction-prod:latest && docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
                 }
             }
+        }
 
 
         stage('Manage Develop Branch') {
+            lock("develop_branch_lock") {
             when {
                 
                 branch "develop"
@@ -37,7 +45,8 @@ pipeline {
                 sh 'docker pull olaniyikolawole744/direction-dev:latest && docker run -d -p 9999:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
                 }
             }
-
         }
+
     }
+}
 
