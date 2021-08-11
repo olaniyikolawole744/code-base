@@ -44,7 +44,7 @@ pipeline {
                 sh 'docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest'
                 sh 'docker push olaniyikolawole744/direction-dev:latest'
                 sh 'docker pull olaniyikolawole744/direction-dev:latest \
-                && docker run -d -p 9999:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
+                && docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
                 }
             }
         }
