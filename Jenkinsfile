@@ -26,8 +26,8 @@ pipeline {
                 sh 'ls && docker build -t direction-prod:latest .' 
                 sh 'docker tag direction-prod:latest olaniyikolawole744/direction-prod:latest'
                 sh 'docker push olaniyikolawole744/direction-prod:latest' 
-                sh 'docker pull olaniyikolawole744/direction-prod:latest'
-                sh 'docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
+                sh 'docker pull olaniyikolawole744/direction-prod:latest \
+                && docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
                 }
             }
         }
@@ -43,8 +43,8 @@ pipeline {
                 sh 'ls && docker build -t direction-dev:latest .'
                 sh 'docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest'
                 sh 'docker push olaniyikolawole744/direction-dev:latest'
-                sh 'docker pull olaniyikolawole744/direction-dev:latest'
-                sh 'docker run -d -p 9999:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
+                sh 'docker pull olaniyikolawole744/direction-dev:latest \
+                && docker run -d -p 9999:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
                 }
             }
         }
