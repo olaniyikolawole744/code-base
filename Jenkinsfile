@@ -30,7 +30,7 @@ pipeline {
                 branch "develop"
             }
             steps {
-                sleep(time: 50, unit: "SECONDS")
+                sleep(time: 55, unit: "SECONDS")
                 sh 'ls && docker build -t direction-dev:latest . \
                 && docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest && docker push olaniyikolawole744/direction-dev:latest \
                 && docker pull olaniyikolawole744/direction-dev:latest && docker run -d -p 9999:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
