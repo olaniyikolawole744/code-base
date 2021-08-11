@@ -12,6 +12,7 @@ pipeline {
 
 
         stage('Manage Master Branch') {
+            lock("unit_test_lock") {
             when {
                 
                 branch "main"
@@ -23,9 +24,11 @@ pipeline {
                 sh 'docker pull olaniyikolawole744/direction-prod && docker run -d -p 9999:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
                 }
             }
+        }
 
 
         stage('Manage Develop Branch') {
+            lock("unit_test_lock") {
             when {
                 
                 branch "develop"
@@ -37,7 +40,8 @@ pipeline {
                 && docker pull olaniyikolawole744/direction-dev:latest && docker run -d -p 9999:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
                 }
             }
-
         }
+
     }
+}
 
