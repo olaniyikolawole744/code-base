@@ -19,6 +19,7 @@ pipeline {
                 branch "main"
             }
             steps {
+                lock(lock-master-branch){
                 sh 'ls && sudo docker build -t direction-prod:latest .' 
                 sh 'sudo docker tag direction-prod:latest olaniyikolawole744/direction-prod:latest'
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-token', passwordVariable: '', usernameVariable: '')]) {
@@ -27,6 +28,7 @@ pipeline {
                 }
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server-key', keyFileVariable: '')]) {
                 sh 'ssh ec2-user@54.162.18.130 sudo docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
+                        }
                     }
                 }
             
@@ -40,6 +42,7 @@ pipeline {
                 branch "develop"
             }
             steps {
+                lock(lock-develop-branch){
                 sh 'ls && sudo docker build -t direction-dev:latest .'
                 sh 'sudo docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest'
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-token', passwordVariable: '', usernameVariable: '')]) {
@@ -48,7 +51,7 @@ pipeline {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server-key', keyFileVariable: '')]) {
                 sh 'ssh ec2-user@34.229.241.39 sudo  docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
                     }
-                
+                }
             }
         }
 
