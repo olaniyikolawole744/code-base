@@ -16,7 +16,7 @@ pipeline {
             }
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server-key', keyFileVariable: '')]) {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-token', passwordVariable: '', usernameVariable: '')]) {
+                 {
                 
                 }
                 sh 'ssh ec2-user@54.162.18.130  ls && sudo docker build -t direction-prod:latest .' 
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server-key', keyFileVariable: '')]) {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-token', passwordVariable: '', usernameVariable: '')]) {
+                {
                 
                 }
                 sh 'ssh ec2-user@34.229.241.39 ls && sudo docker build -t direction-dev:latest .'
