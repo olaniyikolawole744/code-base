@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_CREDENTIALS = credentials ('dockerhub-id')
+        DOCKERHUB_CREDENTIALS = credentials ('dockerhub-token')
     }
 
     options { 
@@ -26,8 +26,9 @@ pipeline {
                 sh 'ls && docker build -t direction-prod:latest .' 
                 sh 'docker tag direction-prod:latest olaniyikolawole744/direction-prod:latest'
                 sh 'docker push olaniyikolawole744/direction-prod:latest' 
-                sh 'docker pull olaniyikolawole744/direction-prod:latest \
-                && docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
+                withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server-key', keyFileVariable: '')]) {
+                sh 'ssh ec2-user@54.162.18.130 docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
+                    }
                 }
             }
         }
@@ -43,12 +44,12 @@ pipeline {
                 sh 'ls && docker build -t direction-dev:latest .'
                 sh 'docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest'
                 sh 'docker push olaniyikolawole744/direction-dev:latest'
-                sh 'docker pull olaniyikolawole744/direction-dev:latest \
-                && docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
+                withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server-key', keyFileVariable: '')]) {
+                sh 'ssh ec2-user@54.162.18.130 docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
+                    }
                 }
             }
         }
 
     }
 }
-
