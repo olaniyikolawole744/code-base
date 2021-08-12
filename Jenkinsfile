@@ -23,11 +23,11 @@ pipeline {
                 branch "main"
             }
             steps {
-                sh 'ls && docker build -t direction-prod:latest .' 
-                sh 'docker tag direction-prod:latest olaniyikolawole744/direction-prod:latest'
-                sh 'docker push olaniyikolawole744/direction-prod:latest' 
+                sh 'ls && sudo docker build -t direction-prod:latest .' 
+                sh 'sudo docker tag direction-prod:latest olaniyikolawole744/direction-prod:latest'
+                sh 'sudo docker push olaniyikolawole744/direction-prod:latest' 
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server-key', keyFileVariable: '')]) {
-                sh 'ssh ec2-user@54.162.18.130 docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
+                sh 'ssh ec2-user@54.162.18.130 sudo docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
                     }
                 }
             
@@ -41,11 +41,11 @@ pipeline {
                 branch "develop"
             }
             steps {
-                sh 'ls && docker build -t direction-dev:latest .'
-                sh 'docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest'
-                sh 'docker push olaniyikolawole744/direction-dev:latest'
+                sh 'ls && sudo docker build -t direction-dev:latest .'
+                sh 'sudo docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest'
+                sh 'sudo docker push olaniyikolawole744/direction-dev:latest'
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server-key', keyFileVariable: '')]) {
-                sh 'ssh ec2-user@34.229.241.39 docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
+                sh 'ssh ec2-user@34.229.241.39 sudo  docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
                     }
                 
             }
