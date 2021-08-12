@@ -17,7 +17,7 @@ pipeline {
 
 
         stage('Manage Master Branch') {
-            lock("master_branch_lock") {
+            
             when {
                 
                 branch "main"
@@ -30,12 +30,12 @@ pipeline {
                 sh 'ssh ec2-user@54.162.18.130 docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
                     }
                 }
-            }
+            
         }
 
 
         stage('Manage Develop Branch') {
-            lock("develop_branch_lock") {
+            
             when {
                 
                 branch "develop"
@@ -45,9 +45,9 @@ pipeline {
                 sh 'docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest'
                 sh 'docker push olaniyikolawole744/direction-dev:latest'
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server-key', keyFileVariable: '')]) {
-                sh 'ssh ec2-user@54.162.18.130 docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
+                sh 'ssh ec2-user@34.229.241.39 docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
                     }
-                }
+                
             }
         }
 
