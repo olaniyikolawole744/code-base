@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials ('dockerhub-token')
     }
-           
+       stages {    
         stage('Manage Build Branch') {
             when {
                 branch "develop"
@@ -45,7 +45,7 @@ pipeline {
                 sh 'ssh ec2-user@34.229.241.39 sudo  docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  direction-dev:latest'
                   }
 
-                }
+            }
             }
 
 
