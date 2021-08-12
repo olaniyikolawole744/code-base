@@ -28,8 +28,8 @@ pipeline {
                 
                 withCredentials([
                 usernamePassword(credentialsId: 'dockerhub-token', passwordVariable: '', usernameVariable: '')]) {
-                lock('develop') {   sh 'ssh ec2-user@34.229.241.39 ls && sudo docker build -t direction-dev:latest .'}
-                sh 'ssh ec2-user@34.229.241.39 sudo docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest'
+                lock('develop') {   sh 'ls && sudo docker build -t direction-dev:latest .'}
+                sh 'sudo docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest'
                 sh 'sudo docker push olaniyikolawole744/direction-dev:latest'                    
                 }
 
