@@ -19,9 +19,9 @@ pipeline {
                 ])  {
                 sh 'ssh ec2-user@54.162.18.130 sudo docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
                 }
-            
-        }
-       }
+                }
+            }
+       
 
         
         stage('Manage Develop Branch') {
@@ -46,9 +46,9 @@ pipeline {
 
                 }
             }
-    }
-        }
-    }
+    
+        
+    
 
 
 
