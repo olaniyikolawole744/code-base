@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('DOCKERTOKEN')
+    }
+
     
        stages {    
         stage('Manage Build Branch') {
@@ -7,10 +11,8 @@ pipeline {
                 branch "develop"
             }
             steps {
-                
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-token', passwordVariable: '', usernameVariable: '')]) {
                 sh 'ls && sudo docker build -t direction-dev:latest .'
-                }
+                
             }
         }
             
@@ -20,11 +22,11 @@ pipeline {
                 branch "develop"
                         }
             steps {
-                
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-token', passwordVariable: '', usernameVariable: '')]) {
                 sh 'sudo docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest'
                 sh 'sudo docker push olaniyikolawole744/direction-dev:latest'                    
-                }
+                
+                
+                
              }
         }
 
