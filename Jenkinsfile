@@ -1,8 +1,6 @@
 pipeline {
     agent any
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials ('dockerhub-token')
-    }
+    
        stages {    
         stage('Manage Build Branch') {
             when {
