@@ -1,5 +1,11 @@
 pipeline {
     agent any
+    environment {
+        withCredentials([usernamePassword(credentialsId: 'dockerhub-token', passwordVariable: '', usernameVariable: '')]) {
+    // some block
+}
+
+    }
     
     options { 
         disableConcurrentBuilds() 
