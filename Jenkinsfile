@@ -2,7 +2,7 @@ pipeline {
     agent any
    
     stages {
-        lock('master') {
+        
         stage('Manage Master Branch') {
            when {
                 branch "main"
@@ -10,7 +10,7 @@ pipeline {
             steps {
                 withCredentials([
                 usernamePassword(credentialsId: 'dockerhub-token', passwordVariable: '', usernameVariable: '')])  {
-                sh 'ls && sudo docker build -t direction-prod:latest .' 
+                lock('master') { sh 'ls && sudo docker build -t direction-prod:latest .' }
                 sh 'sudo docker tag direction-prod:latest olaniyikolawole744/direction-prod:latest'
                 sh 'sudo docker push olaniyikolawole744/direction-prod:latest'
                 }
@@ -19,11 +19,11 @@ pipeline {
                 ])  {
                 sh 'ssh ec2-user@54.162.18.130 sudo docker run -d -p 8080:8080 -e loginname=myname -e loginpass=mypass -e api_key=*****  olaniyikolawole744/direction-prod:latest'
                 }
-            }
+            
         }
        }
 
-        lock('develop') {
+        
         stage('Manage Develop Branch') {
             when {
                 branch "develop"
@@ -32,9 +32,9 @@ pipeline {
                 
                 withCredentials([
                                  usernamePassword(credentialsId: 'dockerhub-token', passwordVariable: '', usernameVariable: '')]) {
-                sh 'sudo docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest'
-                 sh 'ssh ec2-user@34.229.241.39 ls && sudo docker build -t direction-dev:latest .'
+                lock('develop') {   sh 'ssh ec2-user@34.229.241.39 ls && sudo docker build -t direction-dev:latest .'}
                 sh 'ssh ec2-user@34.229.241.39 sudo docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest'
+                sh 'sudo docker push olaniyikolawole744/direction-dev:latest'                    
                                      }
 
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server-key', keyFileVariable: '')
