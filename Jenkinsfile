@@ -16,9 +16,9 @@ pipeline {
             }
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server-key', keyFileVariable: '')]) {
-                 {
+                 
                 
-                }
+                
                 sh 'ssh ec2-user@54.162.18.130  ls && sudo docker build -t direction-prod:latest .' 
                 sh 'ssh ec2-user@54.162.18.130  sudo docker tag direction-prod:latest olaniyikolawole744/direction-prod:latest'
                 sh 'ssh ec2-user@54.162.18.130  sudo docker push olaniyikolawole744/direction-prod:latest' 
@@ -35,9 +35,9 @@ pipeline {
             steps {
                 
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-server-key', keyFileVariable: '')]) {
-                {
                 
-                }
+                
+                
                 sh 'ssh ec2-user@34.229.241.39 ls && sudo docker build -t direction-dev:latest .'
                 sh 'ssh ec2-user@34.229.241.39 sudo docker tag direction-dev:latest olaniyikolawole744/direction-dev:latest'
                 sh 'ssh ec2-user@34.229.241.39 sudo docker push olaniyikolawole744/direction-dev:latest'
