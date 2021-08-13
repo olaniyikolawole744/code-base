@@ -9,10 +9,21 @@ pipeline {
                 branch "develop"
             }
               steps {
-                checkout scm
-                docker.withRegistry('https://hub.docker.com/r/olaniyikolawole744/direction-prod', 'docker-hub-token')
+                node {
+    checkout scm
+
+    docker.withRegistry('https://hub.docker.com/r/olaniyikolawole744/direction-prod', 'docker-hub-token') {
+
+        def customImage = docker.build("direction-prod:latest")
+
+        /* Push the container to the custom Registry */
+        customImage.push()
+    }
+}          
               }
-        }            
+        }  
+
+        
 
             
 
