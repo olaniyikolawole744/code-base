@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_CREDENTIALS = credentials ('docker-login')
+        DOCKERHUB_CREDENTIALS = credentials ('dockerhub-token')
     }
 
     options { 
