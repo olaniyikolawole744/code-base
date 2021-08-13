@@ -9,9 +9,9 @@ pipeline {
         }
 
     stages {
-        stage('build') {
+        stage('build image') {
             steps {
-                sh 'ls && sudo docker build -t direction-dev:latest .'
+                sh 'sudo docker build -t direction-dev:latest .'
                 }
             }
 
@@ -21,7 +21,7 @@ pipeline {
                 }
             }
 
-        stage('push') {
+        stage('push to hub') {
             steps {
                 sh 'ls && sudo docker push direction-dev:latest'
                 }
