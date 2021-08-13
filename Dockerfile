@@ -1,4 +1,5 @@
-FROM dockette/mvn
+#FROM dockette/mvn
+FROM fabric8/maven-builder
 LABEL maintainer="shegoj@yahoo.com"
 COPY . /data
 WORKDIR /data
