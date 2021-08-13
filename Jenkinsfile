@@ -9,7 +9,7 @@ pipeline {
                 branch "develop"
             }
               steps {
-                sh 'node --version'
+                
               }
         }            
 
